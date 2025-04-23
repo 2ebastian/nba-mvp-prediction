@@ -1,0 +1,9 @@
+Scripts/00_Garbage/
+.DS_Store
+# Ignore tous les fichiers contenant 'old'
+*old*
+*old*/
+*Old*
+*Old*/Data/
+
+Data/
