@@ -53,7 +53,6 @@ def predict_the_mvp(dataframe, season, features, top_n=3, display=True):
     return season_data
 
 
-
 if __name__ == "__main__":
     model_path = "/Users/sebastianestephe/Desktop/Python_-_Projet_Perso/03-ML_NBA_MVP/Models/mvp_xgb_advancedfeatures_model2025-04-22.pkl"
     data_path = "/Users/sebastianestephe/Desktop/Python_-_Projet_Perso/03-ML_NBA_MVP/Data/03_df_2024_ready_for_prediction2025-04-22.csv"
