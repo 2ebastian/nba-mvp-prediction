@@ -1,6 +1,7 @@
 V1.0
 
 PREDICTIONS FOR 2024 - 2025   : 
+
     1. Shai Gilgeous-Alexander: 66.11%
     2. Nikola Jokić: 29.64%
     3. Giannis Antetokounmpo: 4.25%
