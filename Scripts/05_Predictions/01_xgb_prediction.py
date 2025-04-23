@@ -1,13 +1,18 @@
 import pandas as pd
 import pickle
+import numpy as np
 
+
+import pandas as pd
+import pickle
+import numpy as np
 
 # Load the trained model from a pickle file
 def load_model(model_path):
     with open(model_path, 'rb') as file:
         return pickle.load(file)
 
-def predict_the_mvp(dataframe, season, features, top_n=5, display=True):
+def predict_the_mvp(dataframe, season, features, top_n=3, display=True):
     """
     Predict MVP candidates for a given season and display the top N predictions.
     
@@ -32,18 +37,26 @@ def predict_the_mvp(dataframe, season, features, top_n=5, display=True):
     # Players ranking
     season_data = season_data.sort_values(by='predicted_score', ascending=False)
 
+    # Focus on top N
+    top_players = season_data.head(top_n).copy()
+
+    # Normalize over top N
+    top_scores = top_players['predicted_score'].values
+    total_top_scores = np.sum(top_scores)
+    top_players['predicted_probability'] = (top_scores / total_top_scores * 100).round(2)
+
     if display:
         print(f"\nTop {top_n} MVP predictions for the {season} - {season + 1} season:\n")
-        for i, (_, row) in enumerate(season_data.head(top_n).iterrows(), 1):
-            print(f"{i}. {row['player_name']}: {row['predicted_score']:.4f}")
+        for i, (_, row) in enumerate(top_players.iterrows(), 1):
+            print(f"{i}. {row['player_name']}: {row['predicted_probability']:.2f}%")
     
     return season_data
 
 
 
 if __name__ == "__main__":
-    model_path = "/path/to/intput/model"
-    data_path = "/path/to/intput/season_dataframe_topredict"
+    model_path = "/Users/sebastianestephe/Desktop/Python_-_Projet_Perso/03-ML_NBA_MVP/Models/mvp_xgb_advancedfeatures_model2025-04-22.pkl"
+    data_path = "/Users/sebastianestephe/Desktop/Python_-_Projet_Perso/03-ML_NBA_MVP/Data/03_df_2024_ready_for_prediction2025-04-22.csv"
 
     # Load model and dataframe
     model = load_model(model_path)
@@ -66,4 +79,4 @@ if __name__ == "__main__":
         'blocks_per_game', 'turnovers_per_game', 'personal_fouls_per_game', 'total_points_per_game'
     ]
 
-    predict_the_mvp(dataframe, season, features, top_n=5, display=True)
+    predict_the_mvp(dataframe, season, features, top_n=3, display=True)
